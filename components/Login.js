@@ -2,22 +2,17 @@ import { useState } from 'react';
 import artist from '../lib/artist';
 import defaultUser from '../lib/defaultUser';
 
-const Login = ({ user, setUser }) => {
+const Login = ({ setUser, image, setImage }) => {
   const [isArtist, setIsArtist] = useState(false);
   const [username, setUsername] = useState('');
-  const [image, setImage] = useState();
   const [artistName, setArtistName] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (isArtist) {
-      setUser(new artist(username, image, artistName));
-    } else {
-      setUser(new defaultUser(username, image));
-    }
-
-    //document.getElementById('login-form').remove();
+    isArtist
+      ? setUser(new artist(username, URL.createObjectURL(image), artistName))
+      : setUser(new defaultUser(username, URL.createObjectURL(image)));
   };
 
   return (
@@ -63,11 +58,16 @@ const Login = ({ user, setUser }) => {
             />
           </div>
 
-          <div>
-            <label className='label' htmlFor='image'>
-              Profile picture:
-            </label>
-            <input type='file' accept='image/png, image/jpeg' name='image' />
+          <div className='flex space-x-2'>
+            <p className='text-xl font-semibold'>Profile Picture:</p>
+
+            <input
+              type='file'
+              accept='image/png, image/jpeg'
+              name='image'
+              onChange={(e) => setImage(e.target.files[0])}
+              required
+            />
           </div>
 
           <div className='text-center'>

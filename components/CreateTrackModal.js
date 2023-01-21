@@ -49,7 +49,9 @@ const CreateTrackModal = ({ user, createTrackModal, setCreateTrackModal }) => {
             />
           </div>
 
-          <div>
+          <div className='flex space-x-5'>
+            <p className='text-xl font-semibold text-white'>Track:</p>
+
             <input
               className='text-white'
               type='file'
@@ -59,7 +61,9 @@ const CreateTrackModal = ({ user, createTrackModal, setCreateTrackModal }) => {
             />
           </div>
 
-          <div>
+          <div className='flex space-x-5'>
+            <p className='text-xl font-semibold text-white'>Image:</p>
+
             <input
               className='text-white'
               type='file'

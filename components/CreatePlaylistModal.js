@@ -60,7 +60,8 @@ const CreatePlaylistModal = ({
             />
           </div>
 
-          <div>
+          <div className='flex space-x-5'>
+            <p className='text-xl font-semibold text-white'>Image:</p>
             <input
               className='text-white'
               type='file'

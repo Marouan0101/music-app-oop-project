@@ -10,7 +10,7 @@ const Sidebar = ({
   setCreateTrackModal,
 }) => {
   return (
-    <section className='w-1/4 min-w-[12rem] overflow-auto bg-dark p-2 text-lg text-white '>
+    <section className='w-1/4 min-w-[12rem] overflow-y-auto overflow-x-hidden bg-dark p-2 text-lg text-white '>
       <div className='space-y-4 text-xl font-semibold'>
         <div className='cursor-pointer text-center'>
           <Link href='/'>Home</Link>

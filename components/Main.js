@@ -1,8 +1,11 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import { BsThreeDots, BsPlayCircle } from 'react-icons/bs';
 
-const Main = ({ user, currentTrack, setCurrentTrack }) => {
+const Main = ({ user, setCurrentTrack }) => {
   const hour = new Date().getHours();
+  const [isTrackMenuOpen, setIsTrackMenuOpen] = useState(false);
+  const [playlistHover, setPlaylistHover] = useState(false);
 
   const greeting = () => {
     if (hour >= 0 && hour < 6) {
@@ -18,12 +21,6 @@ const Main = ({ user, currentTrack, setCurrentTrack }) => {
     }
   };
 
-  /* if (user) {
-    user.createPlaylist('test', 'asdfsadf', 'url');
-    user.createPlaylist('test2', 'asdfsadf', 'url');
-    console.log(user.playlists);
-  } */
-
   return (
     <main className='w-full overflow-auto bg-gray-100 pb-20'>
       <h1 className='h-40  bg-gradient-to-b from-dark p-5 text-4xl font-bold text-white'>
@@ -34,7 +31,7 @@ const Main = ({ user, currentTrack, setCurrentTrack }) => {
         <section className='space-y-4 p-5'>
           <h2 className='text-3xl font-semibold'>Your Playlists</h2>
 
-          <div className='grid grid-cols-1 gap-x-2 gap-y-4 rounded-xl  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+          <div className='grid grid-cols-1 gap-x-2 gap-y-4 rounded-xl sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
             {user.playlists.slice(0, 8).map((playlist) => {
               return (
                 <div
@@ -63,11 +60,11 @@ const Main = ({ user, currentTrack, setCurrentTrack }) => {
         <section className='space-y-4 p-5'>
           <h2 className='text-3xl font-semibold'>Your Tracks</h2>
 
-          <div className='grid grid-cols-1 gap-x-2 gap-y-4 rounded-xl  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+          <div className='grid grid-cols-1 gap-x-2 gap-y-4 rounded-xl  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
             {user.tracks.slice(0, 8).map((track) => {
               return (
-                <div className='col-span-1 flex items-center justify-between overflow-hidden rounded-lg bg-gradient-to-tr from-primary-dark via-primary-dark to-primary pr-2'>
-                  <div className='relative'>
+                <div className='relative col-span-1 flex items-center justify-between  overflow-visible rounded-lg bg-gradient-to-tr from-primary-dark via-primary-dark to-primary pr-2'>
+                  <div className='relative '>
                     <BsPlayCircle
                       className='absolute top-1/2 left-1/2 h-12 w-12 -translate-y-1/2 -translate-x-1/2 cursor-pointer transition-colors duration-75 hover:text-secondary'
                       onClick={() => setCurrentTrack(track.file)}
@@ -77,21 +74,47 @@ const Main = ({ user, currentTrack, setCurrentTrack }) => {
                       quality={100}
                       width={64}
                       height={64}
-                      className='h-16 w-16 object-cover'
+                      className='h-16 w-16 rounded-l-lg object-cover'
                     />
                   </div>
 
-                  <div className='relative flex items-center space-x-2'>
-                    <div className='flex-1 text-right text-lg font-semibold text-white'>
+                  <div className='flex items-center space-x-2 '>
+                    <div className='flex-1  text-right text-lg font-semibold text-white'>
                       {track.name}
                     </div>
-                    <BsThreeDots className='h-6 w-6 cursor-pointer text-slate-200' />
+                    <BsThreeDots
+                      className='h-6 w-6 cursor-pointer text-slate-200'
+                      onClick={() => setIsTrackMenuOpen(!isTrackMenuOpen)}
+                    />
 
-                    <div className='absolute bottom-0 bg-black text-white'>
-                      <div>Trackmenu</div>
-                      <div>Trackmenu2</div>
-                      <div>Trackmenu3</div>
-                    </div>
+                    {isTrackMenuOpen && (
+                      <div className='absolute bottom-3/4 right-0 rounded-lg bg-dark p-2 text-white'>
+                        <div
+                          className='relative'
+                          onMouseEnter={() => setPlaylistHover(true)}
+                          onMouseLeave={() => setPlaylistHover(false)}
+                        >
+                          <div className=' cursor-pointer'>Add To Playlist</div>
+
+                          {user.playlists.length > 0 && playlistHover && (
+                            <div className='absolute left-full bottom-0 max-h-36 max-w-[16rem] overflow-y-auto overflow-x-hidden rounded-lg bg-dark p-2 text-right'>
+                              {user.playlists.map((playlist) => {
+                                return (
+                                  <div
+                                    className='cursor-pointer'
+                                    onClick={() =>
+                                      user.addTrackToPlaylist(track, playlist)
+                                    }
+                                  >
+                                    {playlist.name}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
