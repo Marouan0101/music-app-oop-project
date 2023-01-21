@@ -44,6 +44,7 @@ const Main = ({ user, setCurrentTrack }) => {
                     width={64}
                     height={64}
                     className='h-16 w-16 object-cover'
+                    alt='image'
                   />
 
                   <div className='mr-2 flex-1 text-right text-lg font-semibold text-white'>
@@ -63,7 +64,10 @@ const Main = ({ user, setCurrentTrack }) => {
           <div className='grid grid-cols-1 gap-x-2 gap-y-4 rounded-xl  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
             {user.tracks.slice(0, 8).map((track) => {
               return (
-                <div className='relative col-span-1 flex items-center justify-between  overflow-visible rounded-lg bg-gradient-to-tr from-primary-dark via-primary-dark to-primary pr-2'>
+                <div
+                  key={track.id}
+                  className='relative col-span-1 flex items-center justify-between  overflow-visible rounded-lg bg-gradient-to-tr from-primary-dark via-primary-dark to-primary pr-2'
+                >
                   <div className='relative '>
                     <BsPlayCircle
                       className='absolute top-1/2 left-1/2 h-12 w-12 -translate-y-1/2 -translate-x-1/2 cursor-pointer transition-colors duration-75 hover:text-secondary'
@@ -75,6 +79,7 @@ const Main = ({ user, setCurrentTrack }) => {
                       width={64}
                       height={64}
                       className='h-16 w-16 rounded-l-lg object-cover'
+                      alt='image'
                     />
                   </div>
 
@@ -101,6 +106,7 @@ const Main = ({ user, setCurrentTrack }) => {
                               {user.playlists.map((playlist) => {
                                 return (
                                   <div
+                                    key={playlist.id}
                                     className='cursor-pointer'
                                     onClick={() =>
                                       user.addTrackToPlaylist(track, playlist)

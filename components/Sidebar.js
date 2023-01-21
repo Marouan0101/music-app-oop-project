@@ -55,7 +55,10 @@ const Sidebar = ({
         {user &&
           user.playlists.map((playlist) => {
             return (
-              <div className='hover:cursor-pointer hover:text-secondary'>
+              <div
+                key={playlist.id}
+                className='hover:cursor-pointer hover:text-secondary'
+              >
                 {playlist.name}
               </div>
             );
