@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Player from '../components/Player';
-import Login from '../components/login';
+import Login from '../components/Login';
 import { useState } from 'react';
 import Profile from '../components/Profile';
 import Sidebar from '../components/Sidebar';
